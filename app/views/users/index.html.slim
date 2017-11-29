@@ -1,0 +1,33 @@
+p
+  | Please upload csv to proceed.
+  
+  span<> = link_to 'This is the test CSV.', 'test.csv'
+
+= form_tag upload_users_path, multipart: true do
+	= file_field_tag :file, required: true
+	= submit_tag 'Import CSV'
+h2 
+	| Users
+	| (#{User.count})
+
+-	User.connection
+-	if User.count > 0
+	table
+		tr
+			th Name
+			th Date
+			th Number
+			th Description
+		-	User.all.each do |user|
+			tr
+				td
+					=	user.name
+				td
+					=	user.date.to_date
+				td
+					=	user.number
+				td
+					=	user.description
+- else
+	p
+		|	no user found
